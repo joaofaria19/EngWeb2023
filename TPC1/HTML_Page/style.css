@@ -1,0 +1,42 @@
+p{
+    margin:20px 5%;
+}
+
+.top{
+    display: block;
+    justify-content: center;
+    text-align: center;
+}
+
+.header{
+    margin:0;
+    display:flex;
+    justify-content:center;
+
+}
+
+.links{
+    padding: 10px 50px;
+    color: #fff;
+    background-color: grey;
+    margin: 0 10px;
+    text-decoration:none;
+    font-family:'Courier New', Courier, monospace;
+    font-weight: bold;
+    border-radius: 5px;
+}
+
+.subtitle{
+    margin-left:5%;
+    font-family:'Courier New', Courier, monospace;
+    font-size: 25px;
+    
+}
+
+.goback{
+    padding:2% 0;
+    display:flex;
+    justify-content:center;
+}
+
+
