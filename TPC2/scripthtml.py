@@ -51,7 +51,7 @@ def pagina_cidade(cidade):
         </html>
     """
     # Salvar a página HTML com o nome da cidade
-    with open(f"{nome}.html", "w") as arquivo:
+    with open(f"{idcidade}.html", "w") as arquivo:
         arquivo.write(pageHTML)
 
 # Chamar a função para cada cidade na lista
