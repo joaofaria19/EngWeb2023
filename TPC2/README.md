@@ -1,6 +1,4 @@
-# EngWeb2023
-
-# TPC2
+# EngWeb2023 - TPC2
 
 O Trabalho para casa 2, da unidade curricular de engenharia web, consiste na criação de um servidor de páginas web. Estas páginas web são referentes às cidades presentes no dataset posteriormente fornecido, a cada cidade é atríbuida uma página html tendo como título o id da cidade correspondente.
 
