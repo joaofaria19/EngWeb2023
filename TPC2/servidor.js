@@ -5,7 +5,6 @@ var fs = require('fs');
 
 http.createServer(function(req,res){
     var pedido = url.parse(req.url,true).pathname.substring(1);
-
     var d = new Date().toISOString().substring(0,16);
     console.log(req.method+" "+req.url+" "+d);
     if(!pedido){
