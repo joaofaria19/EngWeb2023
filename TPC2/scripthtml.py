@@ -38,11 +38,11 @@ def cria_indice():
     indiceHTML ="""<!DOCTYPE html>
     <html>
         <head>
-            <title>MapaVirtual</title>
+            <title>Mapa Virtual</title>
             <meta charset="utf-8" />
         </head>
         <body>
-            <h1>Índice</h1>
+            <h1>Distritos de Portugal</h1>
             <ol>
     """    
     for d in distritos:
@@ -77,28 +77,31 @@ def pagina_cidade(cidade):
     descricao = cidade['descrição']
     distrito = cidade['distrito']
 
-    pageHTML = f"""
-        <html>
-            <head>
-                <title>{nome}</title>
-                <meta charset="utf-8"/>
-            </head>
-            <body>
-                <a name="{idcidade}"/>
-                <h1>{nome}</h1>
-                <p><b>População: </b>{populacao}</p>
-                <p><b>Descrição: </b>{descricao}</p>
-                <p><b>Distrito: </b>{distrito}</p>
-                <p><b>Ligações: </b></p>
-                <ul>
+    pageHTML = f"""<!DOCTYPE html>
+<html>
+    <head>
+        <title>{nome}</title>
+        <meta charset="utf-8"/>
+    </head>
+    <body>
+        <a name="{idcidade}"/>
+        <h1>{nome}</h1>
+        <p><b>População: </b>{populacao}</p>
+        <p><b>Descrição: </b>{descricao}</p>
+        <p><b>Distrito: </b>{distrito}</p>
+        <p><b>Ligações: </b></p>
+        <ul>
     """
     for vizinho in dictIds[idcidade]:
         nomecidade = dictCidades[vizinho['id']]['nome']
-        pageHTML += f"<li> <a href='/{vizinho['id']}'>{nomecidade}</a> : {vizinho['distância']} km</li>"
+        pageHTML += f"""          
+            <li> 
+                <a href='/{vizinho['id']}'>{nomecidade}</a> : {vizinho['distância']} km
+            </li>"""
     pageHTML += """
-                </ul>
-            </body>
-        </html>
+        </ul>
+    </body>
+</html>
     """
     # Salvar a página HTML com o nome da cidade
     with open(f"./html/{idcidade}.html", "w") as arquivo:
