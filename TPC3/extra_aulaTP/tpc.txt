@@ -1,0 +1,5 @@
+No Get da / respondemos com um págin com um conjunto de opções
+1) lista de pessoas
+2) distribuição por sexo (quantas do sexo masculino quantas do sexo feminino, ou outros), quando clicar no link do numero -> a lista de pessoas do sexo
+3) distribuição por desporto, clica no desporto -> a lista de pessoas
+4) top 10 de profissoes, clica  na profissao e tem a lista de pessoas
