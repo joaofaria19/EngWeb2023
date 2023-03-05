@@ -41,7 +41,23 @@ http.createServer(function (req,res){
     }
 
     else if(req.url == '/people/asc'){
-        axios.get('http://localhost:3000/pessoas?_sort=nome&_ordered=asc')
+        axios.get('http://localhost:3000/pessoas?_sort=nome&_order=asc')
+        //bloco then catch
+        .then(resp => {
+            var pessoas = resp.data // lista de objetos pessoa
+            res.writeHead(200,{'Content-Type': 'text/html; charset=utf-8'});
+            res.end(mypages.getPessoasPage(pessoas,d))
+
+        })
+        .catch(erro => {
+            console.log("ERROR: " + erro)
+            res.writeHead(200,{'Content-Type': 'text/html; charset=utf-8'});
+            res.end("<p>Erro: "+erro+".</p>")
+
+        })
+    }
+    else if(req.url == '/people/desc'){
+        axios.get('http://localhost:3000/pessoas?_sort=nome&_order=desc')
         //bloco then catch
         .then(resp => {
             var pessoas = resp.data // lista de objetos pessoa
@@ -140,17 +156,19 @@ http.createServer(function (req,res){
         axios.get('http://localhost:3000/pessoas')
         //bloco then catch
         .then(resp => {
+            var lista_pessoas = []
             var pessoas = resp.data // lista de objetos pessoa
-            //var desporto = []
-            //for(let i=0; i<pessoas.length;i++){
-            //    for(let j=0; j<pessoas[i].desportos; j++){
-            //        if()
-            //    }
-            //
-            //}
+            var desporto = decodeURIComponent(req.url.substring(8))
+            for(let i=0; i<pessoas.length;i++){
+                for(let j=0; j<pessoas[i].desportos.length; j++){
+                    if(decodeURIComponent(pessoas[i].desportos[j]) == desporto)
+                        lista_pessoas.push(pessoas[i])
+                }
+            
+            }
 
             res.writeHead(200,{'Content-Type': 'text/html; charset=utf-8'});
-            res.end(mypages.getPessoasPage(pessoas,d))
+            res.end(mypages.getPessoasPage(lista_pessoas,d))
 
         })
         .catch(erro => {
@@ -161,7 +179,6 @@ http.createServer(function (req,res){
         })
     
     }
-    // TO DO: Falta consertar o pedido das profissoes
     else if(req.url.match(/(top10jobs)\/\w+/)){
         axios.get('http://localhost:3000/pessoas?profissao='+decodeURIComponent(req.url.substring(11)))
         //bloco then catch
