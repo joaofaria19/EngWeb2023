@@ -259,12 +259,12 @@ return pagHTML
 exports.getTop10Page = function(lista,data){
     const mapProfissao = new Map();
     for(let i=0; i<lista.length;i++){
-        if(mapProfissao.has((lista[i].profissao).toLowerCase())){
-            let valor = mapProfissao.get((lista[i].profissao).toLowerCase());
+        if(mapProfissao.has((lista[i].profissao))){
+            let valor = mapProfissao.get((lista[i].profissao));
             valor+=1;
-            mapProfissao.set((lista[i].profissao).toLowerCase(),valor);
+            mapProfissao.set((lista[i].profissao),valor);
         }else{
-            mapProfissao.set((lista[i].profissao).toLowerCase(),1);
+            mapProfissao.set((lista[i].profissao),1);
         }
     }
     
@@ -330,6 +330,13 @@ return pagHTML
 }
 
 exports.pessoaPage = function(pessoa,data){
+    var flag_BI = false
+    var flag_desc = false
+    if(pessoa.BI)
+        flag_BI=true
+    if(pessoa.descrição)
+        flag_desc=true
+   
     var pagHTML = `
 <!DOCTYPE html>
 <html>
@@ -347,7 +354,24 @@ exports.pessoaPage = function(pessoa,data){
     
         <div class="w3-container">
             <p><b>Idade:</b> ${pessoa.idade}</p>
-            <p><b>Sexo:</b> ${pessoa.sexo}</p>
+            <p><b>Sexo:</b> ${pessoa.sexo}</p>`
+    if(flag_BI){
+
+        pagHTML+=`
+            <p><b>BI:</b> ${pessoa.BI}</p>
+        `
+    }
+    else{
+        pagHTML+=`
+            <p><b>CC:</b> ${pessoa.CC}</p>
+        `
+    }
+    if(flag_desc){
+        pagHTML+=`
+            <p><b>Descrição:</b> ${pessoa.descrição}</p>
+        `
+    }
+    pagHTML+=`
             <p><b>Morada:</b> ${pessoa.morada.cidade} (${pessoa.morada.distrito})</p>
             <p><b>Profissão:</b> ${pessoa.profissao}</p>       
             <p><b>Partido Político:</b> ${pessoa.partido_politico.party_name} (${pessoa.partido_politico.party_abbr})</p>
