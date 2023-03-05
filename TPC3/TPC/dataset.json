@@ -103535,39 +103535,6 @@
                 "comida_favorita": "italiana"
             },
             "id": "p1999"
-        },
-        {
-            "id": "p2000",
-            "BI": "123456",
-            "nome": "Maria",
-            "sexo": "feminino",
-            "morada": {
-                "cidade": "Cadaval",
-                "distrito": "Lisboa"
-            },
-            "profissao": "Estucador",
-            "desportos": [
-                "Salto em comprimento",
-                "Jiu-Jitsu",
-                "Taekwondo",
-                "Columbofilia",
-                "Tiro com arco"
-            ]
-        },
-        {
-            "id": "p2001",
-            "BI": "12456",
-            "nome": "Copertino",
-            "sexo": "masculino",
-            "morada": {
-                "cidade": "Cadaval",
-                "distrito": "Lisboa"
-            },
-            "profissao": "Programador de aplica\u00e7\u00f5es",
-            "desportos": [
-                "Rugby de praia",
-                "Corrida de meio-fundo"
-            ]
         }
     ]
 }

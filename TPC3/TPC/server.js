@@ -39,6 +39,38 @@ http.createServer(function (req,res){
 
         })
     }
+    else if(req.url.match(/p\d+/)){
+        axios.get('http://localhost:3000/pessoas/' + req.url.substring(1))
+        //bloco then catch
+        .then(resp => {
+            var pessoa = resp.data // lista de objetos pessoa
+            res.writeHead(200,{'Content-Type': 'text/html; charset=utf-8'});
+            res.end(mypages.pessoaPage(pessoa,d))
+
+        })
+        .catch(erro => {
+            console.log("ERROR: " + erro)
+            res.writeHead(200,{'Content-Type': 'text/html; charset=utf-8'});
+            res.end("<p>Erro: "+erro+".</p>")
+
+        })
+    }
+    else if(req.url == '/people/asc'){
+        axios.get('http://localhost:3000/pessoas/_sort=nome&_ordered=asc')
+        //bloco then catch
+        .then(resp => {
+            var pessoas = resp.data // lista de objetos pessoa
+            res.writeHead(200,{'Content-Type': 'text/html; charset=utf-8'});
+            res.end(mypages.getPessoasPage(pessoas,d))
+
+        })
+        .catch(erro => {
+            console.log("ERROR: " + erro)
+            res.writeHead(200,{'Content-Type': 'text/html; charset=utf-8'});
+            res.end("<p>Erro: "+erro+".</p>")
+
+        })
+    }
     else if(req.url == '/sexs'){
         axios.get('http://localhost:3000/pessoas/')
         //bloco then catch
@@ -87,7 +119,19 @@ http.createServer(function (req,res){
 
         })
     }
-    else if(req.url.match(/(sexs\/)(\w)+/)){
+    // Expressão regular para enviar sempre o ficheiro css quando requisitado, independente do url posterior
+    else if(req.url.match(/(\/\w+)*(\/w3.css)/)){
+            fs.readFile('w3.css', function(err,data){
+                res.writeHead(200,{'Content-Type': 'text/css; charset=utf-8'});
+                if(err){
+                    res.write("ERRO na leiutra do ficheiro: "+err)
+                }else{
+                    res.write(data)
+                }
+                res.end()
+            })
+    }
+    else if(req.url.match(/(sexs\/)\w+/)){
         axios.get('http://localhost:3000/pessoas?sexo='+req.url.substring(6))
         //bloco then catch
         .then(resp => {
@@ -105,12 +149,20 @@ http.createServer(function (req,res){
         })
     
     }
-    else if(req.url.match(/(sports\/)(\w)+/)){
-        axios.get('http://localhost:3000/pessoas?desporto='+req.url.substring(8))
+    // TO DO: Falta consertar o pedido dos desportos
+    else if(req.url.match(/(sports\/)(\w+)/)){
+        axios.get('http://localhost:3000/pessoas')
         //bloco then catch
         .then(resp => {
             var pessoas = resp.data // lista de objetos pessoa
-        
+            //var desporto = []
+            //for(let i=0; i<pessoas.length;i++){
+            //    for(let j=0; j<pessoas[i].desportos; j++){
+            //        if()
+            //    }
+            //
+            //}
+
             res.writeHead(200,{'Content-Type': 'text/html; charset=utf-8'});
             res.end(mypages.getPessoasPage(pessoas,d))
 
@@ -123,6 +175,7 @@ http.createServer(function (req,res){
         })
     
     }
+    // TO DO: Falta consertar o pedido das profissoes
     else if(req.url.match(/(top10jobs\/)(\w)+/)){
         axios.get('http://localhost:3000/pessoas?profissao='+req.url.substring(11))
         //bloco then catch
@@ -141,19 +194,7 @@ http.createServer(function (req,res){
         })
     
     }
-    // Expressão regular para enviar sempre o ficheiro css quando requisitado, independente do url posterior
-    else if(req.url.match(/(.)*(\/w3.css)/)){
-        fs.readFile('w3.css', function(err,data){
-            res.writeHead(200,{'Content-Type': 'text/css; charset=utf-8'});
-            if(err){
-                res.write("ERRO na leiutra do ficheiro: "+err)
-            }else{
-                res.write(data)
-            }
-            res.end()
-        })
-
-    }else{
+    else{
         res.writeHead(404,{'Content-Type': 'text/html; charset=utf-8'});
         res.end("<p>Erro: Operação não suportada....</p>")
     }
