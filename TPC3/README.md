@@ -11,4 +11,4 @@ O Trabalho para casa 3, da unidade curricular de engenharia web, consiste em tr�
     - Top10 de profissões
     - A página individual de uma pessoa, com a sua informação
 
-(Para questões de estilo é usado o ficheiro css de base fornecido pelo w3schools 'w3.css'.)
+(Para questões de estilo é usado o ficheiro css base fornecido pelo w3schools 'w3.css'.)
