@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>ToDo List</title>
+        <meta charset="UTF-8"/>
+        <link rel="icon" href="favicon.png"/>
+        <link rel="stylesheet" href="public/w3.css"/>
+    </head>
+    <body>
+        <div class="w3-card-4">
+            <header class="w3-container w3-blue-gray" style="display:flex">
+                <h2 style="width:100%">ToDo Form</h2>
+                <button class="w3-button w3-right">Add a new user</button>
+            </header>
+            <form class="w3-container" method="POST">
+                <fieldset>
+                    <label class="w3-text-blue-gray">Limit Date</label>
+                    <input class="w3-input w3-round" type="date" name="date">
+                    <br/>
+                    <label class="w3-text-blue-gray">Who's going to do it</label>
+                    <input class="w3-input w3-round" type="text" name="who" placeholder="Write who will do the task here">
+                    <br/>
+                    <label class="w3-text-blue-gray">Task description</label>
+                    <textarea class="w3-input w3-round" name="desc" rows="3" cols="40" placeholder="Write your task description here"></textarea>
+                    <br/>
+                    <button class="w3-btn w3-hover-light-grey w3-blue-gray w3-round-xlarge w3-right w3-large w3-padding-large">Submit</button>
+                </fieldset>
+            </form>
+        </div>
+        <div class="w3-container" style="display:flex;">
+            <div class="w3-panel w3-border w3-round-large" style="width:50%">
+                <h3>ToDo List</h3>
+                <ul class="w3-ul w3-border">
+                    <li class="w3-display-container">Ovos
+                        <span class="w3-display-right">
+                            <button class="w3-button w3-round"><a href="#"></a>Edit</button>
+                            <button class="w3-button w3-round"><a href="#"></a>Done</button>
+                        </span>
+                    </li>
+                    <li class="w3-display-container">Arroz
+                        <span class="w3-display-right">
+                            <button class="w3-button w3-round"><a href="#"></a>Edit</button>
+                            <button class="w3-button w3-round"><a href="#"></a>Done</button>
+                        </span>
+                    </li>
+                </ul>
+            </div>
+            <div class="w3-panel w3-border w3-round-large" style="width:50%">
+                <h3>Done List</h3>
+                <ul  class="w3-ul w3-border">
+                    <li class="w3-display-container w3-light-grey">
+                        Passear o Cão
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </body>
+</html>

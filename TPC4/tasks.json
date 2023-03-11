@@ -1,0 +1,42 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "name": "Jerónimo de Sousa"
+    },
+    {
+      "id": 2,
+      "name": "Cavaco Silva"
+    }
+  ],
+  "tasks": [
+    {
+      "id": 1,
+      "date": "12/03/2023",
+      "who": "Jerónimo de Sousa",
+      "desc": "Comprar azeitonas",
+      "done": false
+    },
+    {
+      "id": 2,
+      "date": "11/05/2023",
+      "who": "Jerónimo de Sousa",
+      "desc": "Comprar azeite",
+      "done": false
+    },
+    {
+      "id": 3,
+      "date": "02/12/2023",
+      "who": "Cavaco Silva",
+      "desc": "Comprar bacalhau",
+      "done": false
+    },
+    {
+      "id": 4,
+      "date": "24/12/2022",
+      "who": "Jerónimo de Sousa",
+      "desc": "Passear o cão",
+      "done": true
+    }
+  ]
+}
