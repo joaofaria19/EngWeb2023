@@ -1,5 +1,5 @@
 
-exports.homePage = function(tasks,data){
+exports.homePage = function(tasks,d){
     var pagHTML = `
 <!DOCTYPE html>
 <html>
@@ -10,7 +10,7 @@ exports.homePage = function(tasks,data){
         <link rel="stylesheet" href="w3.css"/>
     </head>
     <body>
-        <div class="w3-card-4">
+        <div class="w3-card-4 w3-border w3-round-xlarge">
             <header class="w3-container w3-blue-gray" style="display:flex">
                 <h2 style="width:100%">ToDo Form</h2>
                 <button class="w3-button w3-right">Add a new user</button>
@@ -26,7 +26,7 @@ exports.homePage = function(tasks,data){
                     <label class="w3-text-blue-gray">Task description</label>
                     <textarea class="w3-input w3-round" name="desc" rows="3" cols="40" placeholder="Write your task description here"></textarea>
                     <br/>
-                    <button class="w3-btn w3-hover-light-grey w3-blue-gray w3-round-xlarge w3-right w3-large w3-padding-large"><a href="/tasks/submit">Submit</a></button>
+                    <a href="/tasks/submit"><button class="w3-btn w3-hover-light-grey w3-blue-gray w3-round-xlarge w3-right w3-large w3-padding-large">Submit</button></a>
                 </fieldset>
             </form>
         </div>
@@ -39,10 +39,11 @@ exports.homePage = function(tasks,data){
             if(tasks[i].done == false){
                 pagHTML+=`
                     <li class="w3-display-container">
-                        ${tasks[i].desc}
+                        ${tasks[i].desc} (${tasks[i].date})<br/>
+                        <h5 class="w3-text-blue-grey w3-">${tasks[i].who}</h5>
                         <span class="w3-display-right">
-                            <a href="/tasks/edit/${tasks[i].id}"><button class="w3-button w3-round">Edit</button></a>
-                            <a href="/tasks/done/${tasks[i].id}"><button class="w3-button w3-round">Done</button></a>
+                            <a href="/tasks/edit/${tasks[i].id}"><button class="w3-button w3-round w3-padding-large">Edit</button></a>
+                            <a href="/tasks/done/${tasks[i].id}"><button class="w3-button w3-round w3-padding-large">Done</button></a>
                         </span>
                    </li>
                 
@@ -62,7 +63,8 @@ exports.homePage = function(tasks,data){
                 pagHTML+=`
                     <li class="w3-display-container w3-light-grey">
                         ${tasks[i].desc}
-                        <a href="/tasks/delete/${tasks[i].id}"><button class="w3-btn w3-round w3-right">Delete</button></a>
+                        <a href="/tasks/delete/${tasks[i].id}"><button class="w3-btn w3-round w3-display-right">Delete</button></a>
+                        
                     </li>                
                 `
             }
@@ -71,9 +73,35 @@ exports.homePage = function(tasks,data){
                 </ul>
             </div>
         </div>
+        <footer class="w3-container w3-blue-grey">
+            <address>Gerado por aluno::a97652 em ${d} </address>
+        </footer>
     </body>
 </html>
     `
+    return pagHTML
+}
+
+exports.confirmPage = function(msg,d){
+    var pagHTML=`
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Confirm Page</title>
+        <meta charset="UTF-8">
+        <link rel="icon" href="favicon.png"/>
+        <link rel="stylesheet" href="public/w3.css"/>
+    </head>
+    <body>
+        <header class="w3-container w3-blue-gray">
+            <h3>${msg}</h3>
+        </header>
+        <footer class="w3-container w3-blue-grey">
+            <address>Gerado por aluno::a97652 em ${d} - <b>[ <a href="http://localhost:7777/">Back</a> ]</b></address>
+        </footer>
+    </body>
+</html>
+`
     return pagHTML
 }
 
@@ -86,14 +114,6 @@ exports.confirmFormPage = function(d){
         <meta charset="UTF-8">
         <link rel="icon" href="favicon.png"/>
         <link rel="stylesheet" href="public/w3.css"/>
-        <style>
-            footer {
-                position: fixed;
-                bottom: 0;
-                width: 100%;
-                height: 50px;
-            }
-        </style>
     </head>
     <body>
         <header class="w3-container w3-blue-gray">
@@ -147,12 +167,15 @@ exports.editTaskFormPage = function(task,d){
                     <textarea class="w3-input w3-round" name="desc" rows="3" cols="40" placeholder="Write your task description here" value=${task.desc}></textarea>
                     <br/>
                     <span class="w3-right">
-                        <a href="/tasks/edit/delete/${task.id}"><button class="w3-btn w3-hover-light-grey w3-red w3-round-xlarge w3-large w3-padding-large">Delete</button></a>
+                        <a href="/tasks/delete/${task.id}"><button class="w3-btn w3-hover-light-grey w3-red w3-round-xlarge w3-large w3-padding-large">Delete</button></a>
                         <a href="/tasks/edit/submit/${task.id}"><button class="w3-btn w3-hover-light-grey w3-blue-gray w3-round-xlarge w3-large w3-padding-large">Submit</button></a>
                     </span>
                 </fieldset>
             </form>
         </div>
+        <footer class="w3-container w3-blue-grey">
+            <address>Gerado por aluno::a97652 em ${d} - <b>[ <a href="http://localhost:7777/">Back</a> ]</b></address>
+        </footer>
     </body>
 </html>
 `

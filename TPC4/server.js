@@ -22,7 +22,7 @@ function collectRequestBodyData(request, callback) {
 }
 
 
-var alunosServer = http.createServer(function (req, res) {
+var todoServer = http.createServer(function (req, res) {
 
     var d = new Date().toISOString().substring(0, 16)
     console.log(req.method + " " + req.url + " " + d)
@@ -50,9 +50,10 @@ var alunosServer = http.createServer(function (req, res) {
                  }
                  else if(/\/tasks\/edit\/[0-9]+$/.test(req.url)){
                     var idTask = req.url.split("/")[3]
-                    axios.get("http://localhost:3000/tasks?id=" + idTask)
+                    axios.get("http://localhost:3000/tasks/" + idTask)
                         .then( response => {
                             let task = response.data
+                            console.log(task)
                             res.writeHead(200, {'Content-Type': 'text/html;charset=utf-8'})
                             res.write(pages.editTaskFormPage(task,d))
                             res.end()
@@ -63,14 +64,14 @@ var alunosServer = http.createServer(function (req, res) {
                             res.end()
                         })
                 }
-                 else if(/\/tasks\/edit\/delete\/[0-9]+$/.test(req.url)){
-                    var idTask = req.url.split("/")[4]
-                    axios.delete("http://localhost:3000/tasks?id=" + idTask)
+                 else if(/\/tasks\/delete\/[0-9]+$/.test(req.url)){
+                    var idTask = req.url.split("/")[3]
+                    axios.delete("http://localhost:3000/tasks/" + idTask)
                         .then( response => {
                             // Add code to render page with the student record
                             res.writeHead(200, {'Content-Type': 'text/html;charset=utf-8'})
-                            // ...
-                            res.end(`<p>The task ${idTask} has been removed</p>`)
+                            res.write("The task "+idTask+" has been removed")
+                            res.end()
                         })
                         .catch(function(erro){
                             res.writeHead(200, {'Content-Type': 'text/html;charset=utf-8'})
@@ -79,16 +80,39 @@ var alunosServer = http.createServer(function (req, res) {
                         })
                 }
             case "POST":
-                if(req.url == '/registo'){
-                    res.writeHead(200, {'Content-Type': 'text/html;charset=utf-8'})
-                    res.write(pages.confirmFormPage(d))
-                    res.end()
+                if(req.url == '/tasks/submit'){
+                    axios.get('http://localhost:3000/tasks/')
+                    .then( resp =>{
+                        last_task = resp.data.lastIndexOf()
+                        collectRequestBodyData(req, result => {
+                            if(result){
+                                axios.put('http://localhost:3000/tasks/'+last_task.id++,result)
+                                
+                                .then(resp => {
+                                    console.log(resp.data);
+                                    res.writeHead(201, {'Content-Type': 'text/html;charset=utf-8'})
+                                    res.write(pages.confirmFormPage(d))
+                                    res.end()
+                                }).catch(error => {
+                                    console.log('Erro: ' + error);
+                                    res.writeHead(201, {'Content-Type': 'text/html;charset=utf-8'})
+                                    res.write("<p>Unable to add task...</p>")
+                                    res.end()
+                                })
+                            }
+                            else{
+                                res.writeHead(201, {'Content-Type': 'text/html;charset=utf-8'})
+                                res.write("<p>Unable to collect data from body...</p>")
+                                res.end()
+                            }
+                        })
+                    })
+
                 }
-                break;
-            }
+        }
     }
 })
 
-alunosServer.listen(7777, ()=>{
+todoServer.listen(7777, ()=>{
     console.log("Server listening on port 7777...")
 })
