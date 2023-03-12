@@ -70,7 +70,7 @@ var todoServer = http.createServer(function (req, res) {
                         .then( response => {
                             // Add code to render page with the student record
                             res.writeHead(200, {'Content-Type': 'text/html;charset=utf-8'})
-                            res.write("The task "+idTask+" has been removed")
+                            res.write(pages.confirmPage("The task "+idTask+" has been removed"))
                             res.end()
                         })
                         .catch(function(erro){
@@ -79,14 +79,56 @@ var todoServer = http.createServer(function (req, res) {
                             res.end()
                         })
                 }
+                else if(/\/tasks\/done\/[0-9]+$/.test(req.url)){
+                    var idTask = req.url.split("/")[3]
+                    axios.get("http://localhost:3000/tasks/" + idTask)
+                        .then( response => {
+                            console.log(response.data)
+                            var task = response.data
+                            axios.put('http://localhost:3000/tasks/'+task.id,{
+                                "id": task.id,
+                                "date": task.date,
+                                "who": task.who,
+                                "desc": task.desc,
+                                "done": true
+                            })
+                                .then(resp => {
+                                    console.log(resp.data);
+                                    res.writeHead(201, {'Content-Type': 'text/html;charset=utf-8'})
+                                    // res.write(pages.confirmPage())
+                                    res.write(pages.confirmPage("The task "+task.desc+" done !!"))
+                                    res.end()
+                                }).catch(error => {
+                                    console.log('Erro: ' + error);
+                                    res.writeHead(201, {'Content-Type': 'text/html;charset=utf-8'})
+                                    res.write("<p>Unable to add task...</p>")
+                                    res.end()
+                                })
+                        })
+                        .catch(function(erro){
+                            res.writeHead(200, {'Content-Type': 'text/html;charset=utf-8'})
+                            res.write(`<p>Could not get task ${idTask} Erro: ` + erro)
+                            res.end()
+                        })
+                }else if(req.url == "/tasks/adduser"){
+                    axios.get("http://localhost:3000/users/")
+                        .then( response => {
+                            res.writeHead(200, {'Content-Type': 'text/html;charset=utf-8'})
+                            res.write(pages.addUser(d))
+                            res.end()
+                        })
+                        .catch(function(erro){
+                            res.writeHead(200, {'Content-Type': 'text/html;charset=utf-8'})
+                            res.write(`<p>Could not get list of users... Erro: ` + erro)
+                            res.end()
+                        })
+
+                }
             case "POST":
-                if(req.url == '/tasks/submit'){
-                    axios.get('http://localhost:3000/tasks/')
-                    .then( resp =>{
-                        last_task = resp.data.lastIndexOf()
-                        collectRequestBodyData(req, result => {
+                if(req.url == "/tasks/submit"){
+                    collectRequestBodyData(req, result => {
                             if(result){
-                                axios.put('http://localhost:3000/tasks/'+last_task.id++,result)
+                                axios.put('http://localhost:3000/tasks/9',result)
                                 
                                 .then(resp => {
                                     console.log(resp.data);
@@ -106,9 +148,19 @@ var todoServer = http.createServer(function (req, res) {
                                 res.end()
                             }
                         })
-                    })
 
                 }
+
+                    //.catch(erro => {
+                    //    res.writeHead(200, {'Content-Type': 'text/html;charset=utf-8'})
+                    //    res.write("<p>Unable to get list of tasks... Erro: " + erro)
+                    //    res.end()
+                    
+                    
+            //default: 
+            //    res.writeHead(200, {'Content-Type': 'text/html;charset=utf-8'})
+            //    res.write("<p>" + req.method + " unsupported in this server.</p>")
+            //    res.end()
         }
     }
 })

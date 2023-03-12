@@ -13,7 +13,7 @@ exports.homePage = function(tasks,d){
         <div class="w3-card-4 w3-border w3-round-xlarge">
             <header class="w3-container w3-blue-gray" style="display:flex">
                 <h2 style="width:100%">ToDo Form</h2>
-                <button class="w3-button w3-right">Add a new user</button>
+                <button class="w3-button w3-right"><a href="tasks/adduser">Add a new user</a></button>
             </header>
             <form class="w3-container" method="POST">
                 <fieldset>
@@ -26,7 +26,7 @@ exports.homePage = function(tasks,d){
                     <label class="w3-text-blue-gray">Task description</label>
                     <textarea class="w3-input w3-round" name="desc" rows="3" cols="40" placeholder="Write your task description here"></textarea>
                     <br/>
-                    <a href="/tasks/submit"><button class="w3-btn w3-hover-light-grey w3-blue-gray w3-round-xlarge w3-right w3-large w3-padding-large">Submit</button></a>
+                    <button class="w3-btn w3-hover-light-grey w3-blue-gray w3-round-xlarge w3-right w3-large w3-padding-large"><a href="/tasks/submit">Submit</a></button>
                 </fieldset>
             </form>
         </div>
@@ -40,7 +40,7 @@ exports.homePage = function(tasks,d){
                 pagHTML+=`
                     <li class="w3-display-container">
                         ${tasks[i].desc} (${tasks[i].date})<br/>
-                        <h5 class="w3-text-blue-grey w3-">${tasks[i].who}</h5>
+                        <h7 class="w3-text-blue-grey w3-">${tasks[i].who}</h7>
                         <span class="w3-display-right">
                             <a href="/tasks/edit/${tasks[i].id}"><button class="w3-button w3-round w3-padding-large">Edit</button></a>
                             <a href="/tasks/done/${tasks[i].id}"><button class="w3-button w3-round w3-padding-large">Done</button></a>
@@ -90,7 +90,7 @@ exports.confirmPage = function(msg,d){
         <title>Confirm Page</title>
         <meta charset="UTF-8">
         <link rel="icon" href="favicon.png"/>
-        <link rel="stylesheet" href="public/w3.css"/>
+        <link rel="stylesheet" href="w3.css"/>
     </head>
     <body>
         <header class="w3-container w3-blue-gray">
@@ -113,7 +113,7 @@ exports.confirmFormPage = function(d){
         <title>Confirm Page</title>
         <meta charset="UTF-8">
         <link rel="icon" href="favicon.png"/>
-        <link rel="stylesheet" href="public/w3.css"/>
+        <link rel="stylesheet" href="w3.css"/>
     </head>
     <body>
         <header class="w3-container w3-blue-gray">
@@ -173,6 +173,37 @@ exports.editTaskFormPage = function(task,d){
                 </fieldset>
             </form>
         </div>
+        <footer class="w3-container w3-blue-grey">
+            <address>Gerado por aluno::a97652 em ${d} - <b>[ <a href="http://localhost:7777/">Back</a> ]</b></address>
+        </footer>
+    </body>
+</html>
+`
+    return pagHTML
+}
+
+exports.addUser = function(d){
+    var pagHTML=`
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>New user</title>
+        <meta charset="UTF-8">
+        <link rel="icon" href="favicon.png"/>
+        <link rel="stylesheet" href="w3.css"/>
+    </head>
+    <body>
+        <header class="w3-container w3-blue-gray">
+            <h2>New user</h2>
+        </header>
+        <form class="w3-container" method="POST">
+        <fieldset>
+            <label class="w3-text-blue-gray">Name</label>
+            <input class="w3-input w3-round" type="text" name="name" placeholder="Write new user name" >
+            <br/>
+            <button class="w3-btn w3-hover-light-grey w3-blue-gray w3-round-xlarge w3-right w3-large w3-padding-large"><a href="/users/submit">Submit</a></button>
+        </fieldset>
+        </form>
         <footer class="w3-container w3-blue-grey">
             <address>Gerado por aluno::a97652 em ${d} - <b>[ <a href="http://localhost:7777/">Back</a> ]</b></address>
         </footer>
