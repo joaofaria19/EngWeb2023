@@ -42,8 +42,9 @@ exports.homePage = function(tasks,d){
                         ${tasks[i].desc} (${tasks[i].date})<br/>
                         <h7 class="w3-text-blue-grey w3-">${tasks[i].who}</h7>
                         <span class="w3-display-right">
+
                             <a href="/tasks/edit/${tasks[i].id}"><button class="w3-button w3-round w3-padding-large">Edit</button></a>
-                            <a href="/tasks/done/${tasks[i].id}"><button class="w3-button w3-round w3-padding-large">Done</button></a>
+                            <a href="/tasks/done/${tasks[i].id}"><button class="w3-button w3-hover-green w3-round w3-padding-large">Done</button></a>
                         </span>
                    </li>
                 
@@ -93,9 +94,10 @@ exports.confirmPage = function(msg,d){
         <link rel="stylesheet" href="w3.css"/>
     </head>
     <body>
-        <header class="w3-container w3-blue-gray">
+        <div class="w3-panel w3-green">
+            <h2>Success!</h2>
             <h3>${msg}</h3>
-        </header>
+        </div> 
         <footer class="w3-container w3-blue-grey">
             <address>Gerado por aluno::a97652 em ${d} - <b>[ <a href="http://localhost:7777/">Back</a> ]</b></address>
         </footer>
@@ -104,6 +106,31 @@ exports.confirmPage = function(msg,d){
 `
     return pagHTML
 }
+
+exports.errorPage = function(msg,d){
+    var pagHTML=`
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Confirm Page</title>
+        <meta charset="UTF-8">
+        <link rel="icon" href="favicon.png"/>
+        <link rel="stylesheet" href="w3.css"/>
+    </head>
+    <body>
+        <div class="w3-panel w3-red">
+            <h2>Danger!</h2>
+            <h3>${msg}</h3>
+        </div> 
+        <footer class="w3-container w3-blue-grey">
+            <address>Gerado por aluno::a97652 em ${d} - <b>[ <a href="http://localhost:7777/">Back</a> ]</b></address>
+        </footer>
+    </body>
+</html>
+`
+    return pagHTML
+}
+
 
 exports.confirmFormPage = function(task,d){
     var pagHTML=`
@@ -130,6 +157,35 @@ exports.confirmFormPage = function(task,d){
              <tr>
                  <td><b>Task desecription: </b>${task.desc}</td>
              </tr>
+        </table>
+        <footer class="w3-container w3-blue-grey">
+            <address>Gerado por aluno::a97652 em ${d} - <b>[ <a href="http://localhost:7777/">Back</a> ]</b></address>
+        </footer>
+    </body>
+</html>
+`
+    return pagHTML
+}
+
+exports.confirmUserFormPage = function(user,d){
+    var pagHTML=`
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Confirm Page</title>
+        <meta charset="UTF-8">
+        <link rel="icon" href="favicon.png"/>
+        <link rel="stylesheet" href="w3.css"/>
+    </head>
+    <body>
+        <header class="w3-container w3-blue-gray">
+            <h2>New user added!</h2>
+        </header>
+
+        <table class="w3-table w3-table-all">
+            <tr>
+               <td><b>Name: </b>${user.name}</td>
+            </tr>
         </table>
         <footer class="w3-container w3-blue-grey">
             <address>Gerado por aluno::a97652 em ${d} - <b>[ <a href="http://localhost:7777/">Back</a> ]</b></address>
@@ -168,12 +224,14 @@ exports.editTaskFormPage = function(task,d){
                     <label class="w3-text-blue-gray">Task description</label>
                     <input class="w3-input w3-round" type="text" name="desc" placeholder="Write your task description here" value="${task.desc}"></input>
                     <br/>
-                    <span class="w3-right">
-                        <button class="w3-btn w3-hover-light-grey w3-red w3-round-xlarge w3-large w3-padding-large" type="submit">Delete</button>
+                    <span class="w3-right" style="display:flex">
+                        <a href="/tasks/edit/delete/${task.id}" class="w3-btn w3-hover-light-grey w3-red w3-round-xlarge w3-large w3-padding-large" style="margin-right:5%">Delete</a>
                         <button class="w3-btn w3-hover-light-grey w3-blue-gray w3-round-xlarge w3-large w3-padding-large" type="submit">Submit</button>
                     </span>
-                </fieldset>
+                    </fieldset>
             </form>
+            <div class="w3-container w3-white w3-center">
+            </div>
         </div>
         <footer class="w3-container w3-blue-grey">
             <address>Gerado por aluno::a97652 em ${d} - <b>[ <a href="http://localhost:7777/">Back</a> ]</b></address>

@@ -7,16 +7,13 @@
     {
       "id": 2,
       "name": "Cavaco Silva"
+    },
+    {
+      "id": 3,
+      "name": "António Costa"
     }
   ],
   "tasks": [
-    {
-      "id": 1,
-      "date": "2016-03-12",
-      "who": "Jerónimo de Sousa",
-      "desc": "Arranjar o camião",
-      "done": false
-    },
     {
       "id": 2,
       "date": "2015-12-23",
@@ -26,23 +23,23 @@
     },
     {
       "id": 3,
-      "date": "2015-05-22",
-      "who": "Cavaco Silva",
+      "date": "2015-02-16",
+      "who": "Jerónimo de Sousa",
       "desc": "Carregar cimento",
-      "done": true
+      "done": false
     },
     {
       "id": 4,
       "date": "2015-12-22",
       "who": "Cavaco Silva",
       "desc": "Limpar o camião",
-      "done": false
+      "done": true
     },
     {
       "id": 5,
       "date": "2023-03-16",
       "who": "Cavaco Silva",
-      "desc": "Caomprar novo camião",
+      "desc": "Comprar novo camião",
       "done": false
     }
   ]
