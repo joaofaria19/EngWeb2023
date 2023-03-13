@@ -53,7 +53,6 @@ var todoServer = http.createServer(function (req, res) {
                     axios.get("http://localhost:3000/tasks/" + idTask)
                         .then( response => {
                             let task = response.data
-                            console.log(task)
                             res.writeHead(200, {'Content-Type': 'text/html;charset=utf-8'})
                             res.write(pages.editTaskFormPage(task,d))
                             res.end()
@@ -68,9 +67,8 @@ var todoServer = http.createServer(function (req, res) {
                     var idTask = req.url.split("/")[3]
                     axios.delete("http://localhost:3000/tasks/" + idTask)
                         .then( response => {
-                            // Add code to render page with the student record
                             res.writeHead(200, {'Content-Type': 'text/html;charset=utf-8'})
-                            res.write(pages.confirmPage("The task "+idTask+" has been removed"))
+                            res.write(pages.confirmPage("The task has been removed"))
                             res.end()
                         })
                         .catch(function(erro){
@@ -83,7 +81,6 @@ var todoServer = http.createServer(function (req, res) {
                     var idTask = req.url.split("/")[3]
                     axios.get("http://localhost:3000/tasks/" + idTask)
                         .then( response => {
-                            console.log(response.data)
                             var task = response.data
                             axios.put('http://localhost:3000/tasks/'+task.id,{
                                 "id": task.id,
@@ -95,7 +92,6 @@ var todoServer = http.createServer(function (req, res) {
                                 .then(resp => {
                                     console.log(resp.data);
                                     res.writeHead(201, {'Content-Type': 'text/html;charset=utf-8'})
-                                    // res.write(pages.confirmPage())
                                     res.write(pages.confirmPage("The task "+task.desc+" done !!"))
                                     res.end()
                                 }).catch(error => {
@@ -110,7 +106,7 @@ var todoServer = http.createServer(function (req, res) {
                             res.write(`<p>Could not get task ${idTask} Erro: ` + erro)
                             res.end()
                         })
-                }else if(req.url == "/tasks/adduser"){
+                }else if(req.url == "/user/adduser"){
                     axios.get("http://localhost:3000/users/")
                         .then( response => {
                             res.writeHead(200, {'Content-Type': 'text/html;charset=utf-8'})
@@ -124,43 +120,60 @@ var todoServer = http.createServer(function (req, res) {
                         })
 
                 }
+                break;
             case "POST":
-                if(req.url == "/tasks/submit"){
+                if(req.url=="/" || req.url=="/tasks"){
+                    
+                    axios.get('http://localhost:3000/tasks/')
+                        .then( response =>{
+                            var tasks = response.data
+                            lastID = parseInt(tasks.lastIndexOf())
+                            newID = lastID.id++
+                    
                     collectRequestBodyData(req, result => {
-                            if(result){
-                                axios.put('http://localhost:3000/tasks/9',result)
-                                
-                                .then(resp => {
-                                    console.log(resp.data);
-                                    res.writeHead(201, {'Content-Type': 'text/html;charset=utf-8'})
-                                    res.write(pages.confirmFormPage(d))
-                                    res.end()
-                                }).catch(error => {
-                                    console.log('Erro: ' + error);
-                                    res.writeHead(201, {'Content-Type': 'text/html;charset=utf-8'})
-                                    res.write("<p>Unable to add task...</p>")
-                                    res.end()
-                                })
-                            }
-                            else{
+                        console.log(result)
+                        if(result){
+                            axios.post('http://localhost:3000/tasks/',{
+                                "id": newID,
+                                "date": result.date,
+                                "who": result.who,
+                                "desc": result.desc,
+                                "done": false
+                            })
+                            .then(resp => {
+                                console.log(resp.data);
                                 res.writeHead(201, {'Content-Type': 'text/html;charset=utf-8'})
-                                res.write("<p>Unable to collect data from body...</p>")
+                                res.write(pages.confirmFormPage(result,d))
                                 res.end()
-                            }
-                        })
+                            }).catch(error => {
+                                console.log('Erro: ' + error);
+                                res.writeHead(201, {'Content-Type': 'text/html;charset=utf-8'})
+                                res.write("<p>Unable to insert task...</p>")
+                                res.end()
+                            })
+                        }
+                        else{
+                            res.writeHead(201, {'Content-Type': 'text/html;charset=utf-8'})
+                            res.write("<p>Unable to collect data from body...</p>")
+                            res.end()
+                        }
+                    }) 
+                    })
+                    .catch(erro => {
+                            res.writeHead(200, {'Content-Type': 'text/html;charset=utf-8'})
+                            res.write("<p>Unable to get list of tasks... Erro: " + erro)
+                        res.end()
+                    })  
+
+                } else if(req.url=="/" || req.url=="/tasks"){
 
                 }
-
-                    //.catch(erro => {
-                    //    res.writeHead(200, {'Content-Type': 'text/html;charset=utf-8'})
-                    //    res.write("<p>Unable to get list of tasks... Erro: " + erro)
-                    //    res.end()
-                    
-                    
-            //default: 
-            //    res.writeHead(200, {'Content-Type': 'text/html;charset=utf-8'})
-            //    res.write("<p>" + req.method + " unsupported in this server.</p>")
-            //    res.end()
+                            
+                break;    
+            default: 
+                res.writeHead(200, {'Content-Type': 'text/html;charset=utf-8'})
+                res.write("<p>" + req.method + " unsupported in this server.</p>")
+                res.end()
         }
     }
 })

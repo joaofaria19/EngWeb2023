@@ -13,7 +13,7 @@ exports.homePage = function(tasks,d){
         <div class="w3-card-4 w3-border w3-round-xlarge">
             <header class="w3-container w3-blue-gray" style="display:flex">
                 <h2 style="width:100%">ToDo Form</h2>
-                <button class="w3-button w3-right"><a href="tasks/adduser">Add a new user</a></button>
+                <button class="w3-button w3-right"><a href="users/adduser">Add a new user</a></button>
             </header>
             <form class="w3-container" method="POST">
                 <fieldset>
@@ -24,9 +24,9 @@ exports.homePage = function(tasks,d){
                     <input class="w3-input w3-round" type="text" name="who" placeholder="Write who will do the task here">
                     <br/>
                     <label class="w3-text-blue-gray">Task description</label>
-                    <textarea class="w3-input w3-round" name="desc" rows="3" cols="40" placeholder="Write your task description here"></textarea>
+                    <input class="w3-input w3-round" type="text" name="desc" placeholder="Write your task description here"></input>
                     <br/>
-                    <button class="w3-btn w3-hover-light-grey w3-blue-gray w3-round-xlarge w3-right w3-large w3-padding-large"><a href="/tasks/submit">Submit</a></button>
+                    <button type="submit" class="w3-btn w3-hover-light-grey w3-blue-gray w3-round-xlarge w3-right w3-large w3-padding-large">Submit</button>
                 </fieldset>
             </form>
         </div>
@@ -105,7 +105,7 @@ exports.confirmPage = function(msg,d){
     return pagHTML
 }
 
-exports.confirmFormPage = function(d){
+exports.confirmFormPage = function(task,d){
     var pagHTML=`
 <!DOCTYPE html>
 <html>
@@ -122,13 +122,13 @@ exports.confirmFormPage = function(d){
 
         <table class="w3-table w3-table-all">
             <tr>
-               <td><b>Limit Date: </b>10/02/2023</td>
+               <td><b>Limit Date: </b>${task.date}</td>
             </tr>
             <tr>
-                <td><b>Who's going to do it: </b>James Peterson</td>
+                <td><b>Who's going to do it: </b>${task.who}</td>
              </tr>
              <tr>
-                 <td><b>Task desecription: </b>Comprar ovos </td>
+                 <td><b>Task desecription: </b>${task.desc}</td>
              </tr>
         </table>
         <footer class="w3-container w3-blue-grey">
@@ -141,6 +141,8 @@ exports.confirmFormPage = function(d){
 }
 
 exports.editTaskFormPage = function(task,d){
+    console.log(task.who)
+    console.log(task.desc)
     var pagHTML = `
 <!DOCTYPE html>
 <html>
@@ -161,14 +163,14 @@ exports.editTaskFormPage = function(task,d){
                     <input class="w3-input w3-round" type="date" name="date" value=${task.date}>
                     <br/>
                     <label class="w3-text-blue-gray">Who's going to do it</label>
-                    <input class="w3-input w3-round" type="text" name="who" placeholder="Write who will do the task here" value=${task.who}>
+                    <input class="w3-input w3-round" type="text" name="who" placeholder="Write who will do the task here" value="${task.who}">
                     <br/>
                     <label class="w3-text-blue-gray">Task description</label>
-                    <textarea class="w3-input w3-round" name="desc" rows="3" cols="40" placeholder="Write your task description here" value=${task.desc}></textarea>
+                    <input class="w3-input w3-round" type="text" name="desc" placeholder="Write your task description here" value="${task.desc}"></input>
                     <br/>
                     <span class="w3-right">
-                        <a href="/tasks/delete/${task.id}"><button class="w3-btn w3-hover-light-grey w3-red w3-round-xlarge w3-large w3-padding-large">Delete</button></a>
-                        <a href="/tasks/edit/submit/${task.id}"><button class="w3-btn w3-hover-light-grey w3-blue-gray w3-round-xlarge w3-large w3-padding-large">Submit</button></a>
+                        <button class="w3-btn w3-hover-light-grey w3-red w3-round-xlarge w3-large w3-padding-large" type="submit">Delete</button>
+                        <button class="w3-btn w3-hover-light-grey w3-blue-gray w3-round-xlarge w3-large w3-padding-large" type="submit">Submit</button>
                     </span>
                 </fieldset>
             </form>
@@ -201,7 +203,7 @@ exports.addUser = function(d){
             <label class="w3-text-blue-gray">Name</label>
             <input class="w3-input w3-round" type="text" name="name" placeholder="Write new user name" >
             <br/>
-            <button class="w3-btn w3-hover-light-grey w3-blue-gray w3-round-xlarge w3-right w3-large w3-padding-large"><a href="/users/submit">Submit</a></button>
+            <button class="w3-btn w3-hover-light-grey w3-blue-gray w3-round-xlarge w3-right w3-large w3-padding-large" type="submit">Submit</button>
         </fieldset>
         </form>
         <footer class="w3-container w3-blue-grey">

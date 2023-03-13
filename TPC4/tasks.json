@@ -12,30 +12,37 @@
   "tasks": [
     {
       "id": 1,
-      "date": "12/03/2016",
+      "date": "2016-03-12",
       "who": "Jerónimo de Sousa",
       "desc": "Arranjar o camião",
       "done": false
     },
     {
       "id": 2,
-      "date": "23/12/2015",
+      "date": "2015-12-23",
       "who": "Jerónimo de Sousa",
       "desc": "Comprar o camião",
       "done": true
     },
     {
       "id": 3,
-      "date": "22/05/2015",
+      "date": "2015-05-22",
       "who": "Cavaco Silva",
       "desc": "Carregar cimento",
       "done": true
     },
     {
       "id": 4,
-      "date": "22/012/2015",
+      "date": "2015-12-22",
       "who": "Cavaco Silva",
       "desc": "Limpar o camião",
+      "done": false
+    },
+    {
+      "id": 5,
+      "date": "2023-03-16",
+      "who": "Cavaco Silva",
+      "desc": "Caomprar novo camião",
       "done": false
     }
   ]
