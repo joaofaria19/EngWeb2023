@@ -11,6 +11,30 @@
     {
       "id": 3,
       "name": "António Costa"
+    },
+    {
+      "id": 4,
+      "name": "José Silva"
+    },
+    {
+      "id": 5,
+      "name": "João Faria"
+    },
+    {
+      "id": 6,
+      "name": "Marcelo Rebelo de Sousa"
+    },
+    {
+      "id": 7,
+      "name": "Carlos Costa"
+    },
+    {
+      "id": 8,
+      "name": "Abel Silva"
+    },
+    {
+      "id": 9,
+      "name": "Henrique Silvestre"
     }
   ],
   "tasks": [
@@ -18,29 +42,29 @@
       "id": 2,
       "date": "2015-12-23",
       "who": "Jerónimo de Sousa",
-      "desc": "Comprar o camião",
-      "done": true
+      "what": "Comprar o camião",
+      "done": false
     },
     {
       "id": 3,
       "date": "2015-02-16",
       "who": "Jerónimo de Sousa",
-      "desc": "Carregar cimento",
+      "what": "Carregar cimento",
       "done": false
     },
     {
-      "id": 4,
-      "date": "2015-12-22",
+      "id": 7,
+      "date": "2023-03-17",
       "who": "Cavaco Silva",
-      "desc": "Limpar o camião",
+      "desc": "Levar sacos à empresa",
+      "done": false
+    },
+    {
+      "id": 8,
+      "date": "2023-03-29",
+      "who": "Jerónimo de Sousa",
+      "what": "Limpar o terreno",
       "done": true
-    },
-    {
-      "id": 5,
-      "date": "2023-03-16",
-      "who": "Cavaco Silva",
-      "desc": "Comprar novo camião",
-      "done": false
     }
   ]
 }

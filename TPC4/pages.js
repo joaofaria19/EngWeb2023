@@ -1,5 +1,5 @@
 
-exports.homePage = function(tasks,d){
+exports.homePage = function(tasks,users,d){
     var pagHTML = `
 <!DOCTYPE html>
 <html>
@@ -21,10 +21,18 @@ exports.homePage = function(tasks,d){
                     <input class="w3-input w3-round" type="date" name="date">
                     <br/>
                     <label class="w3-text-blue-gray">Who's going to do it</label>
-                    <input class="w3-input w3-round" type="text" name="who" placeholder="Write who will do the task here">
+                    <select class="w3-select w3-round" type="text" name="who">
+                        <option value="" disabled selected>Choose who will do the task here</option>`
+        for(let i=0; i<users.length; i++){
+            pagHTML+=`
+                        <option value="${users[i].name}">${users[i].name}</option>
+            `
+        }
+        pagHTML+=`                    
+                    </select>
                     <br/>
                     <label class="w3-text-blue-gray">Task description</label>
-                    <input class="w3-input w3-round" type="text" name="desc" placeholder="Write your task description here"></input>
+                    <input class="w3-input w3-round" type="text" name="what" placeholder="Write your task description here"></input>
                     <br/>
                     <button type="submit" class="w3-btn w3-hover-light-grey w3-blue-gray w3-round-xlarge w3-right w3-large w3-padding-large">Submit</button>
                 </fieldset>
@@ -35,15 +43,16 @@ exports.homePage = function(tasks,d){
                 <h3>ToDo List</h3>
                 <ul class="w3-ul w3-border">`
 
+                    //<input class="w3-input w3-round" type="text" name="who" placeholder="Write who will do the task here">
         for(let i =0; i<tasks.length; i++){
             if(tasks[i].done == false){
                 pagHTML+=`
                     <li class="w3-display-container">
-                        ${tasks[i].desc} (${tasks[i].date})<br/>
+                        ${tasks[i].what} (${tasks[i].date})<br/>
                         <h7 class="w3-text-blue-grey w3-">${tasks[i].who}</h7>
                         <span class="w3-display-right">
-
-                            <a href="/tasks/edit/${tasks[i].id}"><button class="w3-button w3-round w3-padding-large">Edit</button></a>
+                            <a href="/tasks/delete/${tasks[i].id}"><button class="w3-btn w3-hover-red w3-round w3-padding-large">Delete</button></a>
+                            <a href="/tasks/edit/todo/${tasks[i].id}"><button class="w3-button w3-round w3-padding-large">Edit</button></a>
                             <a href="/tasks/done/${tasks[i].id}"><button class="w3-button w3-hover-green w3-round w3-padding-large">Done</button></a>
                         </span>
                    </li>
@@ -63,9 +72,11 @@ exports.homePage = function(tasks,d){
             if(tasks[i].done == true){
                 pagHTML+=`
                     <li class="w3-display-container w3-light-grey">
-                        ${tasks[i].desc}
-                        <a href="/tasks/delete/${tasks[i].id}"><button class="w3-btn w3-round w3-display-right">Delete</button></a>
-                        
+                        ${tasks[i].what}
+                        <span class="w3-display-right">
+                            <a href="/tasks/edit/done/${tasks[i].id}"><button class="w3-btn w3-round">Edit</button></a>
+                            <a href="/tasks/delete/${tasks[i].id}"><button class="w3-btn w3-round">Delete</button></a>
+                        </span>
                     </li>                
                 `
             }
@@ -155,7 +166,7 @@ exports.confirmFormPage = function(task,d){
                 <td><b>Who's going to do it: </b>${task.who}</td>
              </tr>
              <tr>
-                 <td><b>Task desecription: </b>${task.desc}</td>
+                 <td><b>Task desecription: </b>${task.what}</td>
              </tr>
         </table>
         <footer class="w3-container w3-blue-grey">
@@ -183,8 +194,8 @@ exports.confirmUserFormPage = function(user,d){
         </header>
 
         <table class="w3-table w3-table-all">
-            <tr>
-               <td><b>Name: </b>${user.name}</td>
+            <tr>    
+                <td><b>Name: </b>${user.name}</td>
             </tr>
         </table>
         <footer class="w3-container w3-blue-grey">
@@ -197,8 +208,6 @@ exports.confirmUserFormPage = function(user,d){
 }
 
 exports.editTaskFormPage = function(task,d){
-    console.log(task.who)
-    console.log(task.desc)
     var pagHTML = `
 <!DOCTYPE html>
 <html>
@@ -222,16 +231,11 @@ exports.editTaskFormPage = function(task,d){
                     <input class="w3-input w3-round" type="text" name="who" placeholder="Write who will do the task here" value="${task.who}">
                     <br/>
                     <label class="w3-text-blue-gray">Task description</label>
-                    <input class="w3-input w3-round" type="text" name="desc" placeholder="Write your task description here" value="${task.desc}"></input>
+                    <input class="w3-input w3-round" type="text" name="what" placeholder="Write your task description here" value="${task.what}"></input>
                     <br/>
-                    <span class="w3-right" style="display:flex">
-                        <a href="/tasks/edit/delete/${task.id}" class="w3-btn w3-hover-light-grey w3-red w3-round-xlarge w3-large w3-padding-large" style="margin-right:5%">Delete</a>
-                        <button class="w3-btn w3-hover-light-grey w3-blue-gray w3-round-xlarge w3-large w3-padding-large" type="submit">Submit</button>
-                    </span>
-                    </fieldset>
+                    <button class="w3-btn w3-hover-light-grey w3-blue-gray w3-round-xlarge w3-large w3-padding-large w3-right" type="submit">Submit</button>
+                </fieldset>
             </form>
-            <div class="w3-container w3-white w3-center">
-            </div>
         </div>
         <footer class="w3-container w3-blue-grey">
             <address>Gerado por aluno::a97652 em ${d} - <b>[ <a href="http://localhost:7777/">Back</a> ]</b></address>

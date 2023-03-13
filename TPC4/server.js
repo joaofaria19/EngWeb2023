@@ -37,10 +37,19 @@ var todoServer = http.createServer(function (req, res) {
                 if(req.url=="/" || req.url == "/tasks"){
                      axios.get("http://localhost:3000/tasks")
                          .then(response => {
-                             var tasks = response.data
-                             res.writeHead(200, {'Content-Type': 'text/html;charset=utf-8'})
-                             res.write(pages.homePage(tasks,d))
-                             res.end()
+                            axios.get("http://localhost:3000/users")
+                            .then(respuser => {
+                                var tasks = response.data
+                                var users = respuser.data
+                                res.writeHead(200, {'Content-Type': 'text/html;charset=utf-8'})
+                                res.write(pages.homePage(tasks,users,d))
+                                res.end()
+                            })
+                            .catch(erro => {
+                                res.writeHead(200, {'Content-Type': 'text/html;charset=utf-8'})
+                                res.write("<p>Unable to get list of users... Erro: " + erro)
+                                res.end()
+                            })
                          })
                          .catch(erro => {
                              res.writeHead(200, {'Content-Type': 'text/html;charset=utf-8'})
@@ -48,8 +57,8 @@ var todoServer = http.createServer(function (req, res) {
                              res.end()
                          })
                 }
-                else if(/\/tasks\/edit\/[0-9]+$/.test(req.url)){
-                    var idTask = req.url.split("/")[3]
+                else if(/\/tasks\/edit(\/done|\/todo)\/[0-9]+$/.test(req.url)){
+                    var idTask = req.url.split("/")[4]
                     axios.get("http://localhost:3000/tasks/" + idTask)
                         .then( response => {
                             let task = response.data
@@ -59,7 +68,7 @@ var todoServer = http.createServer(function (req, res) {
                         })
                         .catch(function(erro){
                             res.writeHead(200, {'Content-Type': 'text/html;charset=utf-8'})
-                            res.write(`<p>Could not get task ${idTask} Erro: ` + erro)
+                            res.write(pages.errorPage(`Could not get task ${idTask} Erro: ` + erro))
                             res.end()
                         })
                 }
@@ -73,7 +82,7 @@ var todoServer = http.createServer(function (req, res) {
                         })
                         .catch(function(erro){
                             res.writeHead(200, {'Content-Type': 'text/html;charset=utf-8'})
-                            res.write(`<p>Could not get task ${idTask} Erro: ` + erro)
+                            res.write(pages.errorPage(`Could not get task ${idTask} Erro: ` + erro))
                             res.end()
                         })
                 }
@@ -86,38 +95,26 @@ var todoServer = http.createServer(function (req, res) {
                                 "id": task.id,
                                 "date": task.date,
                                 "who": task.who,
-                                "desc": task.desc,
+                                "what": task.what,
                                 "done": true
                             })
                                 .then(resp => {
                                     res.writeHead(201, {'Content-Type': 'text/html;charset=utf-8'})
-                                    res.write(pages.confirmPage("The task "+task.desc+" done !!"))
+                                    res.write(pages.confirmPage("The task "+task.what+" done !!"))
                                     res.end()
                                 }).catch(error => {
                                     console.log('Erro: ' + error);
-                                    res.writeHead(201, {'Content-Type': 'text/html;charset=utf-8'})
-                                    res.write("<p>Unable to add task...</p>")
+                                    res.writeHead(200, {'Content-Type': 'text/html;charset=utf-8'})
+                                    res.write(pages.errorPage("Unable to add task...</p>"))
                                     res.end()
                                 })
                         })
                         .catch(function(erro){
                             res.writeHead(200, {'Content-Type': 'text/html;charset=utf-8'})
-                            res.write(`<p>Could not get task '${idTask}' Erro: ` + erro)
+                            res.write(pages.errorPage(`Could not get task '${idTask}' Erro: ` + erro))
                             res.end()
                         })
-                }else if(/\/tasks\/edit\/delete\/[0-9]+$/.test(req.url)){
-                        var idTask = req.url.split("/")[4]
-                        axios.delete("http://localhost:3000/tasks/" + idTask)
-                            .then(response => {
-                                res.writeHead(200, {'Content-Type': 'text/html;charset=utf-8'})
-                                res.write(pages.confirmPage("The task has been removed"))
-                                res.end()
-                            })
-                            .catch(function(erro){
-                                res.writeHead(200, {'Content-Type': 'text/html;charset=utf-8'})
-                                res.write(`<p>Could not get task ${idTask} Erro: ` + erro)
-                                res.end()
-                            })
+                
                 }else if(req.url == "/users/adduser"){
                     axios.get("http://localhost:3000/users/")
                         .then( response => {
@@ -127,12 +124,13 @@ var todoServer = http.createServer(function (req, res) {
                         })
                         .catch(function(erro){
                             res.writeHead(200, {'Content-Type': 'text/html;charset=utf-8'})
-                            res.write(`<p>Could not get list of users... Erro: ` + erro)
+                            res.write(pages.errorPage(`Could not get list of users... Erro: ` + erro))
                             res.end()
                         })
 
                 }
                 break;
+
             case "POST":
                 if(req.url=="/" || req.url=="/tasks"){
                     
@@ -149,7 +147,7 @@ var todoServer = http.createServer(function (req, res) {
                                 "id": newID,
                                 "date": result.date,
                                 "who": result.who,
-                                "desc": result.desc,
+                                "what": result.what,
                                 "done": false
                             })
                             .then(resp => {
@@ -159,21 +157,21 @@ var todoServer = http.createServer(function (req, res) {
                             }).catch(error => {
                                 console.log('Erro: ' + error);
                                 res.writeHead(201, {'Content-Type': 'text/html;charset=utf-8'})
-                                res.write("<p>Unable to insert task...</p>")
+                                res.write(pages.errorPage("Unable to insert task..."))
                                 res.end()
                             })
                         }
                         else{
                             res.writeHead(201, {'Content-Type': 'text/html;charset=utf-8'})
-                            res.write("<p>Unable to collect data from body...</p>")
+                            res.write(pages.errorPage("Unable to collect data from body..."))
                             res.end()
                         }
                     }) 
                     })
                     .catch(erro => {
                             res.writeHead(200, {'Content-Type': 'text/html;charset=utf-8'})
-                            res.write("<p>Unable to get list of tasks... Erro: " + erro)
-                        res.end()
+                            res.write(pages.errorPage("<p>Unable to get list of tasks... Erro: " + erro))
+                            res.end()
                     })  
 
                 } else if(req.url=="/users/adduser"){
@@ -183,45 +181,75 @@ var todoServer = http.createServer(function (req, res) {
                             var tasks = response.data
                             lastID = parseInt(tasks.lastIndexOf())
                             newID = lastID.id++
-                    
-                    collectRequestBodyData(req, result => {
-                        if(result){
-                            axios.post('http://localhost:3000/users/',{
-                                "id": newID,
-                                "name": result.name,
-                            })
-                            .then(resp => {
-                                res.writeHead(201, {'Content-Type': 'text/html;charset=utf-8'})
-                                res.write(pages.confirmUserFormPage(result,d))
-                                res.end()
-                            }).catch(error => {
-                                console.log('Erro: ' + error);
-                                res.writeHead(201, {'Content-Type': 'text/html;charset=utf-8'})
-                                res.write("<p>Unable to insert task...</p>")
-                                res.end()
-                            })
-                        }
-                        else{
-                            res.writeHead(201, {'Content-Type': 'text/html;charset=utf-8'})
-                            res.write("<p>Unable to collect data from body...</p>")
-                            res.end()
-                        }
-                    }) 
+                            collectRequestBodyData(req, result => {
+                                if(result){
+                                    var new_user = {
+                                        "id": newID,
+                                        "name": result.name,
+
+                                    } 
+                                    axios.post('http://localhost:3000/users/',new_user)
+                                    .then(resp => {
+                                        res.writeHead(201, {'Content-Type': 'text/html;charset=utf-8'})
+                                        res.write(pages.confirmUserFormPage(new_user,d))
+                                        res.end()
+                                    }).catch(error => {
+                                        console.log('Erro: ' + error);
+                                        res.writeHead(200, {'Content-Type': 'text/html;charset=utf-8'})
+                                        res.write(pages.errorPage("Unable to insert user..."))
+                                        res.end()
+                                    })
+                                }
+                                else{
+                                    res.writeHead(200, {'Content-Type': 'text/html;charset=utf-8'})
+                                    res.write(pages.errorPage("Unable to collect data from body...</p>"))
+                                    res.end()
+                                }
+                            }) 
                     })
                     .catch(erro => {
                             res.writeHead(200, {'Content-Type': 'text/html;charset=utf-8'})
-                            res.write("<p>Unable to get list of tasks... Erro: " + erro)
+                            res.write(pages.errorPage("Unable to get list of tasks... Erro: " + erro))
                         res.end()
                     })  
-                } else if(/\/tasks\/edit\/[0-9]+$/.test(req.url)){
-                    var idTask = req.url.split("/")[3]
+                } else if(/\/tasks\/edit\/done\/[0-9]+$/.test(req.url)){
+                    var idTask = req.url.split("/")[4]
                     collectRequestBodyData(req, result => {
                         if(result){
                             axios.put('http://localhost:3000/tasks/' + idTask, {
                                 "id": idTask,
                                 "date": result.date,
                                 "who": result.who,
-                                "desc": result.desc,
+                                "what": result.what,
+                                "done": true
+                            })
+                                .then(resp => {
+                                    res.writeHead(200, {'Content-Type': 'text/html;charset=utf-8'})
+                                    res.write(pages.confirmPage("Registo alterado:" + JSON.stringify(resp.data)))
+                                    res.end()
+                                })
+                                .catch(error => {
+                                    console.log('Erro: ' + error);
+                                    res.writeHead(500, {'Content-Type': 'text/html;charset=utf-8'})
+                                    res.write(pages.errorPage("Unable to insert record..."))
+                                    res.end()
+                                });
+                        }
+                        else{
+                            res.writeHead(201, {'Content-Type': 'text/html;charset=utf-8'})
+                            res.write(pages.errorPage("Unable to collect data from body..."))
+                            res.end()
+                        }
+                    });
+                }else if(/\/tasks\/edit\/todo\/[0-9]+$/.test(req.url)){
+                    var idTask = req.url.split("/")[4]
+                    collectRequestBodyData(req, result => {
+                        if(result){
+                            axios.put('http://localhost:3000/tasks/' + idTask, {
+                                "id": idTask,
+                                "date": result.date,
+                                "who": result.who,
+                                "what": result.what,
                                 "done": false
                             })
                                 .then(resp => {
@@ -232,20 +260,22 @@ var todoServer = http.createServer(function (req, res) {
                                 .catch(error => {
                                     console.log('Erro: ' + error);
                                     res.writeHead(500, {'Content-Type': 'text/html;charset=utf-8'})
-                                    res.end("<p>Unable to insert record...</p>")
+                                    res.write(pages.errorPage("Unable to insert record..."))
+                                    res.end()
                                 });
                         }
                         else{
                             res.writeHead(201, {'Content-Type': 'text/html;charset=utf-8'})
-                            res.write("<p>Unable to collect data from body...</p>")
+                            res.write(pages.errorPage("Unable to collect data from body..."))
                             res.end()
                         }
                     });
                 }
-                break;    
+                break;
+
             default: 
                 res.writeHead(200, {'Content-Type': 'text/html;charset=utf-8'})
-                res.write("<p>" + req.method + " unsupported in this server.</p>")
+                res.write(pages.errorPage( req.method + " unsupported in this server."))
                 res.end()
         }
     }
