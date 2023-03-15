@@ -1,0 +1,21 @@
+extends layout 
+
+block content 
+    header.w3-container.w3-blue-gray
+        h2 New task added!   
+    table.w3-table.w3-table-all
+        tr
+            td
+                b Limit Date: 
+                span #{task.date}
+        tr
+            td
+                b Who's going to do it: 
+                span #{task.who}
+        tr
+            td
+                b Task desecription: 
+                span #{task.what}  
+    footer.w3-container.w3-blue-grey
+        address Gerado por aluno::a97652 em #{d} - [ #[a(href="/") Back ]]
+        

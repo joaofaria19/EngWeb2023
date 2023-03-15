@@ -1,0 +1,14 @@
+extends layout 
+
+block content
+    .w3-card-4.w3-border.w3-round-xlarge
+        header.w3-container.w3-blue-gray
+            h2 New user
+        form.w3-container(method="POST")
+            fieldset
+                label.w3-text-blue-gray Name
+                input.w3-input.w3-round(type="text" name="name" placeholder="Write new user name")
+                br
+                button.w3-btn.w3-hover-light-grey.w3-blue-gray.w3-round-xlarge.w3-right.w3-large.w3-padding-large(type="submit") Submit
+        footer.w3-container.w3-blue-grey
+            address Gerado por aluno::a97652 em #{d} - [ #[a(href="/") Back] ]
