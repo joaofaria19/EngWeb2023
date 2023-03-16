@@ -56,3 +56,44 @@ module.exports.deleteTask = idTask=>{
         return erro
     })
 }
+
+
+module.exports.editTask = idTask=>{
+    return axios.get("http://localhost:3000/tasks/"+idTask)
+    .then(resposta=>{
+        return resposta.data
+    }).catch(erro => {
+        return erro
+    })
+}
+
+module.exports.updateToDoTask = (idTask,task)=>{
+    return axios.put("http://localhost:3000/tasks/"+idTask,{
+        "id": task.id,
+        "date": task.date,
+        "who": task.who,
+        "what": task.what,
+        "done": false 
+    })
+    .then(resposta=>{
+        return resposta.data
+    }).catch(erro => {
+        return erro
+    })
+}
+
+
+module.exports.updateDoneTask = (idTask,task)=>{
+    return axios.put("http://localhost:3000/tasks/"+idTask,{
+        "id": task.id,
+        "date": task.date,
+        "who": task.who,
+        "what": task.what,
+        "done": true 
+    })
+    .then(resposta=>{
+        return resposta.data
+    }).catch(erro => {
+        return erro
+    })
+}

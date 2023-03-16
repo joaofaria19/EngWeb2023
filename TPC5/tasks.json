@@ -41,32 +41,24 @@
       "id": 10
     },
     {
-      "name": "Catarina Varzim",
+      "name": "Catarina Gomes",
       "id": 11
-    },
-    {
-      "name": "Catarina Varzim",
-      "id": 12
-    },
-    {
-      "name": "Catarina Varzim",
-      "id": 13
     }
   ],
   "tasks": [
     {
-      "id": 1,
       "date": "2023-03-23",
       "who": "João Faria",
-      "what": "Reparar tijoleira",
-      "done": false
+      "what": "Reparar telhado",
+      "done": false,
+      "id": 1
     },
     {
-      "id": 2,
       "date": "2023-04-11",
       "who": "Carlos Costa",
       "what": "Doar Roupa",
-      "done": false
+      "done": false,
+      "id": 2
     },
     {
       "date": "2023-05-12",
@@ -97,18 +89,18 @@
       "done": false
     },
     {
-      "id": 7,
       "date": "2023-03-17",
       "who": "Cavaco Silva",
       "what": "Levar sacos à empresa",
-      "done": false
+      "done": false,
+      "id": 7
     },
     {
-      "id": 8,
       "date": "2023-03-29",
       "who": "Jerónimo de Sousa",
-      "what": "Limpar o terreno",
-      "done": false
+      "what": "Limpar o terrenos",
+      "done": true,
+      "id": 8
     },
     {
       "date": "2023-05-18",
@@ -118,25 +110,39 @@
       "id": 10
     },
     {
+      "date": "2022-11-08",
+      "who": "Cavaco Silva",
+      "what": "Limpar atrio",
+      "done": false,
+      "id": 11
+    },
+    {
       "date": "2023-12-18",
       "who": "Cavaco Silva",
       "what": "Limpar casa",
-      "done": false,
+      "done": true,
       "id": 12
     },
     {
-      "id": 13,
       "date": "2023-03-24",
       "who": "João Faria",
       "what": "Lavar Carro",
-      "done": false
+      "done": false,
+      "id": 13
     },
     {
       "date": "2023-03-21",
       "who": "João Faria",
-      "what": "Lavar Roupa",
+      "what": "Limpar Computador",
       "done": false,
       "id": 14
+    },
+    {
+      "date": "2024-06-05",
+      "who": "Abel Silva",
+      "what": "Arrumar a casa",
+      "done": false,
+      "id": 15
     }
   ]
 }

@@ -12,9 +12,7 @@ module.exports.list = ()=>{
 
 
 module.exports.addUser = user =>{
-    return axios.post("http://localhost:3000/users",{
-        "name":user.name
-    })
+    return axios.post("http://localhost:3000/users",user)
    .then(resposta => {
         return resposta.data
     })

@@ -1,0 +1,21 @@
+extends layout 
+
+block content
+    .w3-card-4
+      header.w3-container.w3-blue-gray(style='display:flex')
+        h2(style='width:100%') Edit Task
+      form.w3-container(method='POST')
+        fieldset
+          label.w3-text-blue-gray Limit Date
+          input.w3-input.w3-round(type='date' name='date' value=task.date)
+          br
+          label.w3-text-blue-gray Who's going to do it
+          input.w3-input.w3-round(type='text' name='who' placeholder='Write who will do the task here' value=task.who)
+          br
+          label.w3-text-blue-gray Task description
+          input.w3-input.w3-round(type='text' name='what' placeholder='Write your task description here' value=task.what)
+          br
+          label.w3-text-blue-gray Done
+          button.w3-btn.w3-hover-light-grey.w3-blue-gray.w3-round-xlarge.w3-large.w3-padding-large.w3-right(type='submit') Submit
+    footer.w3-container.w3-blue-grey
+      address Gerado por aluno::a97652 em #{d} - [ #[a(href='/') Back] ]
