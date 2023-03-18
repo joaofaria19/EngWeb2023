@@ -10,5 +10,15 @@ block content
                 input.w3-input.w3-round(type="text" name="name" placeholder="Write new user name")
                 br
                 button.w3-btn.w3-hover-light-grey.w3-blue-gray.w3-round-xlarge.w3-right.w3-large.w3-padding-large(type="submit") Submit
+        br
+        table.w3-table-all
+            tr  
+                th ID 
+                th Name 
+            each user in users 
+                tr
+                    td= user.id
+                    td= user.name
+
         footer.w3-container.w3-blue-grey
             address Gerado por aluno::a97652 em #{d} - [ #[a(href="/") Back] ]

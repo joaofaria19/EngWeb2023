@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
-var Task = require('../controllers/tasks')
-var User = require('../controllers/users')
+var Task = require('../controllers/tasks');
+var User = require('../controllers/users');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -26,7 +26,14 @@ router.get('/', function(req, res, next) {
 /* GET new user page. */
 router.get('/adduser', function(req, res, next) {
   var data = new Date().toISOString().substring(0, 16)
-  res.render('addUser',{d:data});
+  User.list() 
+  .then(users =>{
+    res.render('addUser',{users:users, d:data});
+  })
+  .catch(err=>{
+    res.render('error',{error:err,msg:"Unable to get list of users... [Error: " + err + "]",d:data})
+    
+  })
 });
 
 /* GET done task page. */
@@ -83,10 +90,9 @@ router.post('/adduser', function(req, res, next) {
   var data = new Date().toISOString().substring(0, 16)
   User.addUser(req.body)
   .then(user=>{
-    res.render('confirmUser',{u:user, d:data})
+    res.render('confirmUser',{user:user, d:data})
   })
   .catch(err=>{
-    console.log(err)
     res.render('error',{error:err, msg:"Unable to get list of users... [Error: " + err + "]",d:data})
   })
 });
