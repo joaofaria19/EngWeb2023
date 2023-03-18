@@ -48,6 +48,7 @@ router.get('/tasks/done/:idTask', function(req, res, next) {
   })
 });
 
+
 /* GET delete task page. */
 router.get('/tasks/delete/:idTask', function(req, res, next) {
   var data = new Date().toISOString().substring(0, 16)
@@ -66,7 +67,19 @@ router.get('/tasks/edit/:done/:idTask', function(req, res, next) {
   var data = new Date().toISOString().substring(0, 16)
   Task.editTask(req.params.idTask)
  .then(task=>{
-    res.render('editTask',{task:task, d:data})
+    Task.list()
+    .then(tasks=>{
+      User.list()
+      .then(users=>{
+        res.render('editTask',{task:task,tasks:tasks,users:users,d:data})
+      })    
+      .catch(err=>{
+        res.render('error',{error:err,msg:"Unable to get list of users... [Error: " + err + "]",d:data})
+      })
+    })
+    .catch(err=>{
+      res.render('error',{error:err,msg:"Unable to get list of tasks... [Error: " + err + "]",d:data})
+    })
   })
  .catch(err=>{
     res.render('error',{error:err,msg:"Task not found... [Error: " + err + "]",d:data})
@@ -90,6 +103,7 @@ router.post('/adduser', function(req, res, next) {
   var data = new Date().toISOString().substring(0, 16)
   User.addUser(req.body)
   .then(user=>{
+
     res.render('confirmUser',{user:user, d:data})
   })
   .catch(err=>{
@@ -100,7 +114,6 @@ router.post('/adduser', function(req, res, next) {
 /*POST from edit task page. */
 router.post('/tasks/edit/:done/:idTask', function(req, res, next) {
   var data = new Date().toISOString().substring(0, 16)
-  console.log(req.body)
   if(req.params.done == 'done'){
     Task.updateDoneTask(req.params.idTask, req.body)
     .then(task=>{

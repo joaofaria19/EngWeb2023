@@ -1,1 +1,5 @@
-# EngWeb2023
+# EngWeb2023 -TPC5
+
+O trabalho para casa 5, da unidade curricular de engenharia web, consiste na criação de um To Do From A página principal deve contêm 4 áreas: o formulário para a inserção de dados, o formulário para alteração de dados, a lista das tarefas a fazer, e a lista de tarefas feitas. Os elementos de ambas as listas podem ser editados e eliminados, conforma a preferencia do utilizador. O formulário é composto por um campo do tipo data, onde podemos inserir a data limite para a realização da tarefa, em seguida teremos que selecionar uma pessoa para realizar a tarefa, daquelas que já se encontram previamente definidas, e por fim indicar uma descrição onde explicamos em que é que a tarefa consiste. É sempre possível adiconar novas pessoas para realizar as tarefas propostas, para isso basta preencher um formulário onde indicamos, por motivos de simplicidade, o nome da pessoa em questão. As tarefas que ainda não foram realizadas contêm um botão 'done' que, qunado pressionado, coloca a tarefa com o estado de realizada.
+
+Neste trabalho para casa foi utilizado a ferramenta 'express', recorrendo a ficheiros '.pug', de forma a otimizar a criação de apps web como aquela pedida neste tpc.

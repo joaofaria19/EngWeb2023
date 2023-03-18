@@ -6,8 +6,9 @@ block content
       h2(style="width:100%") ToDo Form
       button.w3-button.w3-right 
         a(href="/adduser") Add a new user
+    br
     form.w3-container(method="POST")
-      fieldset
+      fieldset.w3-round-xlarge
         label.w3-text-blue-gray Limit Date
         input.w3-input.w3-round(type="date" name="date")
         br
@@ -22,7 +23,24 @@ block content
         input.w3-input.w3-round(type="text" name="what" placeholder="Write your task description here")
         br
         button(type="submit").w3-btn.w3-hover-light-grey.w3-blue-gray.w3-round-xlarge.w3-right.w3-large.w3-padding-large Submit
+    br
+    form.w3-container(method='POST')
+      fieldset.w3-light-gray.w3-round-xlarge
+        h2.w3-text-blue-gray Edit Task
 
+        label.w3-text-blue-gray Limit Date
+        input.w3-input.w3-round.w3-light-gray(type='date' name='date' readonly)
+        br
+        label.w3-text-blue-gray Who's going to do it
+        input.w3-input.w3-round.w3-light-gray(type='text' name='who' placeholder='Write who will do the task here' readonly)
+        br
+        label.w3-text-blue-gray Task description
+        input.w3-input.w3-round.w3-light-gray(type='text' name='what' placeholder='Write your task description here' readonly)
+        br
+        span.w3-right(style="display:flex;margin:1%")
+          button.w3-btn.w3-hover-red.w3-white.w3-round-xlarge.w3-large.w3-padding-large(style="margin-right:1%" disabled) #[a(href="/")] Cancel
+          button.w3-btn.w3-hover-light-gray.w3-blue-gray.w3-round-xlarge.w3-large.w3-padding-large(type="submit" style="margin-left:1%" disabled) Submit
+    br
     .w3-container(style="display:flex")
       .w3-panel.w3-border.w3-round-large(style="width:50%")
         h3 ToDo List

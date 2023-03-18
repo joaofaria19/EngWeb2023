@@ -1,21 +1,70 @@
 extends layout 
 
 block content
-  .w3-card-4
-    header.w3-container.w3-blue-gray(style='display:flex')
-      h2(style='width:100%') Edit Task
-    form.w3-container(method='POST')
-      fieldset
+  .w3-card-4.w3-border.w3-round-xlarge
+    header.w3-container.w3-blue-gray(style="display:flex")
+      h2(style="width:100%") ToDo Form
+      button.w3-button.w3-right 
+        a(href="/adduser") Add a new user
+    br
+    form.w3-container(method="POST")
+      fieldset.w3-round-xlarge
         label.w3-text-blue-gray Limit Date
-        input.w3-input.w3-round(type='date' name='date' value=task.date)
+        input.w3-input.w3-round(type="date" name="date" readonly)
         br
         label.w3-text-blue-gray Who's going to do it
-        input.w3-input.w3-round(type='text' name='who' placeholder='Write who will do the task here' value=task.who)
+        select.w3-select.w3-round(type="text" name="who" readonly)
+          option(value="" disabled selected) Choose who will do the task here
+          each user in users
+            option(value=user.name) #{user.name}
+            
+        br                  
+        label.w3-text-blue-gray Task description 
+        input.w3-input.w3-round(type="text" name="what" placeholder="Write your task description here" readonly)
+        br
+        button(type="submit" disabled).w3-btn.w3-hover-light-grey.w3-blue-gray.w3-round-xlarge.w3-right.w3-large.w3-padding-large Submit
+    br
+    form.w3-container(method='POST')
+      fieldset.w3-light-gray.w3-round-xlarge
+        h2.w3-text-blue-gray Edit Task
+
+        label.w3-text-blue-gray Limit Date
+        input.w3-input.w3-round.w3-light-gray(type='date' name='date' value = task.date)
+        br
+        label.w3-text-blue-gray Who's going to do it
+        input.w3-input.w3-round.w3-light-gray(type='text' name='who' placeholder='Write who will do the task here' value = task.who)
         br
         label.w3-text-blue-gray Task description
-        input.w3-input.w3-round(type='text' name='what' placeholder='Write your task description here' value=task.what)
+        input.w3-input.w3-round.w3-light-gray(type='text' name='what' placeholder='Write your task description here' value = task.what)
         br
-        button.w3-btn.w3-hover-light-grey.w3-blue-gray.w3-round-xlarge.w3-large.w3-padding-large.w3-right(type='submit') Submit
-  
-  footer.w3-container.w3-blue-grey
-    address Gerado por aluno::a97652 em #{d} - [ #[a(href='/') Back] ]
+
+        span.w3-right(style="display:flex;margin:1%")
+          a(href="/").w3-btn.w3-hover-light-gray.w3-red.w3-round-xlarge.w3-large.w3-padding-large(style="margin-right:1%") Cancel
+          button.w3-btn.w3-hover-light-gray.w3-blue-gray.w3-round-xlarge.w3-large.w3-padding-large(type="submit" style="margin-left:1%") Submit
+        
+    br
+    .w3-container(style="display:flex")
+      .w3-panel.w3-border.w3-round-large(style="width:50%")
+        h3 ToDo List
+        ul.w3-ul.w3-border
+          each task in tasks
+            if task.done == false
+              li.w3-display-container #{task.what} (#{task.date})
+                br
+                h7.w3-text-blue-grey #{task.who}
+                span.w3-display-right
+                  a(href="/tasks/delete/"+task.id).w3-button.w3-hover-red.w3-round.w3-padding-large Delete
+                  a(href="/tasks/edit/todo/"+task.id).w3-button.w3-round.w3-padding-large Edit
+                  a(href="/tasks/done/"+task.id).w3-button.w3-hover-green.w3-round.w3-padding-large Done
+      .w3-panel.w3-border.w3-round-large(style="width:50%")
+        h3 Done List
+        ul.w3-ul.w3-border
+          each task in tasks
+            if task.done == true
+              li.w3-display-container.w3-light-grey #{task.what}
+                span.w3-display-right
+                  a(href="/tasks/edit/done/"+task.id).w3-btn.w3-round Edit
+                  a(href="/tasks/delete/"+task.id).w3-btn.w3-round Delete
+             
+    footer.w3-container.w3-blue-grey
+      address Gerado por aluno::a97652 em #{d}
