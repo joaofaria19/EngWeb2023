@@ -32,7 +32,10 @@ block content
         input.w3-input.w3-round.w3-light-gray(type='date' name='date' value = task.date)
         br
         label.w3-text-blue-gray Who's going to do it
-        input.w3-input.w3-round.w3-light-gray(type='text' name='who' placeholder='Write who will do the task here' value = task.who)
+        select.w3-select.w3-round(type="text" name="who" )
+          option(value=task.who selected) #{task.who}
+          each user in users
+            option(value=user.name) #{user.name}
         br
         label.w3-text-blue-gray Task description
         input.w3-input.w3-round.w3-light-gray(type='text' name='what' placeholder='Write your task description here' value = task.what)

@@ -52,14 +52,27 @@ router.get('/tasks/done/:idTask', function(req, res, next) {
 /* GET delete task page. */
 router.get('/tasks/delete/:idTask', function(req, res, next) {
   var data = new Date().toISOString().substring(0, 16)
-  Task.deleteTask(req.params.idTask)
- .then(task=>{
-    // em vez de fazer redirect, mandar para uma página de configuração
-    res.redirect("/")
+  Task.getTask(req.params.idTask)
+  .then(task=>{
+    console.log(task)
+    res.render('confirmDelete',{task:task,d:data})
   })
  .catch(err=>{
     res.render('error',{error:err,msg:"Task not found... [Error: " + err + "]",d:data})
   })
+});
+
+
+router.get('/tasks/confirm_delete/:idTask', function(req, res, next) {
+  var data = new Date().toISOString().substring(0, 16)  
+  Task.deleteTask(req.params.idTask)
+    .then(task=>{
+      res.redirect("/")
+    })
+   .catch(err=>{
+      res.render('error',{error:err,msg:"Task not found... [Error: " + err + "]",d:data})
+    })
+    
 });
 
 /* GET edit task page. */

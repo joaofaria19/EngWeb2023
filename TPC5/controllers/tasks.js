@@ -10,6 +10,17 @@ module.exports.list = ()=>{
     })
 }
 
+module.exports.getTask = (idTask)=>{
+    return axios.get("http://localhost:3000/tasks?id="+idTask)
+    .then(resposta => {
+        return resposta.data
+    })
+    .catch(erro => {
+        return erro
+    })
+}
+
+
 module.exports.addTask = task =>{
     return axios.post("http://localhost:3000/tasks", {
         "date": task.date,
