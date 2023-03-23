@@ -74,13 +74,6 @@
       "id": 1
     },
     {
-      "date": "2023-04-11",
-      "who": "Abel Silva",
-      "what": "Doar Roupa",
-      "done": false,
-      "id": 2
-    },
-    {
       "date": "2023-05-12",
       "who": "Carlos Costa",
       "what": "Atualizar CC",
@@ -144,11 +137,11 @@
       "id": 13
     },
     {
+      "id": 14,
       "date": "2023-03-21",
       "who": "João Faria",
       "what": "Limpar QUINTAL",
-      "done": false,
-      "id": 14
+      "done": true
     },
     {
       "date": "2024-06-05",
