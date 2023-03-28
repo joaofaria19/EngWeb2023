@@ -1,0 +1,30 @@
+[
+    {
+        "_id": "t1",
+        "nome": "Ana Dias",
+        "modalidade": "Atletismo",
+        "duracao":60,
+        "data": "2020-01-01"
+    },
+    {
+        "_id": "t2",
+        "nome": "Ana Peixoto",
+        "modalidade": "Atletismo",
+        "duracao":100,
+        "data": "2020-03-02"
+    },
+    {
+        "_id": "t3",
+        "nome": "Gustavo Pereira",
+        "modalidade": "Natação",
+        "duracao":120,
+        "data": "2020-04-12"
+    },
+    {
+        "_id": "t4",
+        "nome": "Gustavo Silva",
+        "modalidade": "Ciclismo",
+        "duracao":120,
+        "data": "2020-04-12"
+    }
+]
