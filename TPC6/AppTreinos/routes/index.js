@@ -25,13 +25,7 @@ router.get('/treinos/modalidades', function(req, res, next) {
 
 router.get('/treinos/duracao', function(req, res, next) {
   Treino.getDuracaoTotal()
-    .then(dados => {
-      acc = 0
-      for(let i=0; i<dados.length; i++){
-          acc += dados[i]
-      }
-      res.status(201).json(acc)
-    })
+    .then(dados => {res.status(201).json(dados)})
     .catch(erro => {res.status(607).json(erro);})
 });
 

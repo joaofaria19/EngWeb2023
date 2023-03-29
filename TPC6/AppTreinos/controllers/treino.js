@@ -35,14 +35,21 @@ module.exports.getModalidades = () => {
 }
 
 module.exports.getDuracaoTotal = () => {
-    return Treino
-    .distinct('duracao')
+    return Treino.find()
     .then(dados => {
-        return dados
+        let acc = 0;
+        var duracoes = dados.map((desporto) => desporto.duracao);
+
+        duracoes.forEach(item => {
+            acc += item;
+        });
+        return acc
       })
     .catch(erro => {
         return erro
     })
+
+    
 }
 
 module.exports.getAtletas = () => {
