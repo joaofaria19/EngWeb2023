@@ -5,13 +5,13 @@ O trabalho para casa 6, da unidade curricular de engenharia web, resume-se em 3 
 - Um script em python para a inserção de pessoas (insertPessoas)
 - Uma api de dados para um dataset de treinos (AppTreinos)
 
-## API_pessoas
+### API_pessoas
 A api de pessoas proposta é utilizada para receber vários posts de objetos do tipo pessoa, esta api tanto pode receber um objeto pessoa como uma lista de objetos pessoa. A api foi projetada para reagit a qualquer uma das operações de CRUD, embora que, para este exercicio apenas seja necesssario a função de inserção de dados na base de dados.
 
-## insertPessoas
+### insertPessoas
 Um script em python com o objetivo de inserir o dataset na base de dados. O script carrega o dataset para memória e em seguida, de dez em dez registos(por motivos de otimização), realiza um post contendo 10 pedidos para a api de dados(API_pessoas) de forma a mesma inserir os registos na base de dados mongoDB
 
-## AppTreinos
+### AppTreinos
 Aplicação desenvolvida na aula sexta aula prática, nesta aplicação é possível realizar operações CRUD sobre uma determinada base de dados. Como extra para este tpc foi sugerido aos alunos a implementação das seguintes operações: 
 - GET /treinos/modalidades
     Deve retornar uma string JSON com a lista de todas as modalidades, sem repetidos e ordenados por ordem alfabetica;
